@@ -1,8 +1,7 @@
 import React from "react";
 import InstNavbar from "../../Components/InstNavbar";
 import { Button, Heading, Text, VStack } from "@chakra-ui/react";
-import HomeInstBgImg from "../../Assets/HomeInstBgImg.svg";
-import HomeInstImg from "../../Assets/HomeInstImg.svg";
+import HomeInstBgImg from "/HomeInstBgImg.svg";
 import { useNavigate } from "react-router-dom";
 
 const HomeInst = () => {
