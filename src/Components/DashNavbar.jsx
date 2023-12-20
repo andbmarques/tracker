@@ -122,11 +122,14 @@ const DashNavbar = () => {
               w="100%"
               onChange={handleSelectWallet}
               value={selectedWallet}
-              placeholder={
-                wallets ? `Carteiras (${wallets.length})` : "Crie uma carteira"
-              }
               focusBorderColor="pink.500"
+              placeholder="Carteiras"
             >
+              {/* <option value="placeholder" disabled>
+                {wallets
+                  ? `Carteiras (${wallets.length})`
+                  : "Crie uma carteira"}
+              </option> */}
               {wallets &&
                 wallets.map((item) => {
                   return (

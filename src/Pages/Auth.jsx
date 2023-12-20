@@ -50,11 +50,11 @@ const AuthPage = () => {
         });
         setIsLoading(false);
         toast({
-          title: 'Logado com sucesso!',
-          status: 'success',
+          title: "Logado com sucesso!",
+          status: "success",
           duration: 5000,
-          isClosable: true
-        })
+          isClosable: true,
+        });
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -74,13 +74,16 @@ const AuthPage = () => {
     setIsLoading(true);
     api
       .post("/user/", { name: name, email: email, password: password })
-      .then((response) => {
-        setIsLoading(false);
-        authContext.setUserData({
-          token: response.data.token,
-          user: response.data.user,
-        });
-        navigate("/dashboard");
+      .then(async (response) => {
+        await api
+          .post("/auth/login", { email: email, password: password })
+          .then((result) =>
+            authContext.setUserData({
+              token: result.data.token,
+              user: result.data.user,
+            })
+          );
+        
       })
       .catch((error) => {
         setIsLoading(false);
@@ -92,6 +95,9 @@ const AuthPage = () => {
           duration: 5000,
           isClosable: true,
         });
+      }).finally(() => {
+        setIsLoading(false)
+        if(authContext.userData.token) navigate('/dashboard')
       });
   };
 

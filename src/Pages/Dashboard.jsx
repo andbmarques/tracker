@@ -14,11 +14,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [selectedPage, setSelectedPage] = useState("Home");
 
-  const handleLoginButton = (e) => {
-    e.preventDefault();
-    navigate("/auth");
-  };
-
   useEffect(() => {
     !userData.token ? navigate("/auth") : null
   }, []);

@@ -60,7 +60,7 @@ const HomeDashboard = () => {
     onTransactionOpen();
   };
 
-  return !wallet ? (
+  return !selectedWallet || !wallet ? (
     <VStack w="100%" alignItems="start" gap="10">
       <Heading color="purple.500" size="sm">
         Home &#62;
