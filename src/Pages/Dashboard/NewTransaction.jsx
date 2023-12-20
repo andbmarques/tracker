@@ -13,6 +13,7 @@ import {
   Select,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Context/authContext";
@@ -20,6 +21,7 @@ import api from "../../api";
 
 const NewTransaction = ({ isOpen, onClose }) => {
   const { userData, selectedWallet } = useContext(AuthContext);
+  const toast = useToast();
 
   const [newTransactionText, setNewTransactionText] = useState();
   const [newTransactionValue, setNewTransactionValue] = useState();
@@ -51,14 +53,14 @@ const NewTransaction = ({ isOpen, onClose }) => {
       )
       .then((result) => {
         setIsLoading(false);
+        onClose()
         toast({
           title: "Sucesso!",
           description: 'Carteira criada com sucesso!',
-          status: "error",
+          status: "success",
           duration: 5000,
           isClosable: true,
         })
-        setTimeout(() => onClose(), 1000);
       })
       .catch((error) =>{
         setIsLoading(false)
