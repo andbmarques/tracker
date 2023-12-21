@@ -29,9 +29,10 @@ import { AuthContext } from "../Context/authContext";
 import api from "../api";
 import { Plus } from "phosphor-react";
 import AccountMenu from "./AccountMenu";
+import { useNavigate } from "react-router-dom";
 
 const DashNavbar = () => {
-  const { userData, setSelectedWallet, selectedWallet } =
+  const { userData, setUserData, setSelectedWallet, selectedWallet } =
     useContext(AuthContext);
   const [wallets, setWallets] = useState();
   const [newWallet, setNewWallet] = useState();
@@ -46,6 +47,7 @@ const DashNavbar = () => {
     onOpen: onCreateWalletOpen,
   } = useDisclosure();
   const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -53,15 +55,13 @@ const DashNavbar = () => {
         headers: { Authorization: `Bearer ${userData.token}` },
       })
       .then((result) => setWallets(result.data))
-      .catch((error) =>
-        toast({
-          title: "Erro!",
-          description: error.response.data.msg,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        })
-      );
+      .catch((error) => {
+        console.log(error.response.data.msg)
+        if (error.response.data.msg === "Token inválido") {
+          setUserData({ user: {}, token: "" });
+          return navigate("/auth");
+        }
+      });
   }, [wallets, userData]);
 
   const handleNewWalletText = (e) => {
